@@ -50,16 +50,6 @@ https://github.com/nbatfai/SamuBrain
 SamuCopy
 https://github.com/nbatfai/SamuCopy
 
---- 
-
-SamuCam
-https://github.com/nbatfai/SamuCam
-
-![samucam1-nandi4](https://cloud.githubusercontent.com/assets/3148120/14001514/91fbb354-f146-11e5-9a0a-5d551bee494a.png)
-
-
-Robopsychology One
-https://github.com/nbatfai/Robopsychology
 ---
 
 SamuTicker
@@ -70,11 +60,15 @@ https://github.com/nbatfai/SamuVocab
 
 --- 
 
+SamuKnows
+https://github.com/nbatfai/SamuKnows
+
+---
+
 SamuCam
 https://github.com/nbatfai/SamuCam
 
 ![samucam1-nandi4](https://cloud.githubusercontent.com/assets/3148120/14001514/91fbb354-f146-11e5-9a0a-5d551bee494a.png)
-
 
 Robopsychology One
 https://github.com/nbatfai/Robopsychology
