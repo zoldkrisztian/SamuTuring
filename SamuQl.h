@@ -1271,7 +1271,7 @@ private:
     */
 
     double max_reward {1.00};
-    double min_reward {-1.00};
+    double min_reward {-100.00};
 
 #ifdef PLACE_VALUE
     double prev_image [10*3];
@@ -1286,7 +1286,7 @@ private:
 #endif
 
     //ReinforcedAction reinforced_action {"unreinforced", -1};
-    ReinforcedAction reinforced_action {-2, -2};
+    ReinforcedAction reinforced_action {-1000, -1000};
     //std::map<ReinforcedAction, int> rules;
     std::map<ReinforcedAction, int> rules;
 
