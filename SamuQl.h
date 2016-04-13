@@ -287,7 +287,8 @@ typedef std::string Feeling;
 #endif
 
 typedef int SPOTriplet;
-typedef std::pair<std::string, SPOTriplet> ReinforcedAction;
+//typedef std::pair<std::string, SPOTriplet> ReinforcedAction;
+typedef std::pair<int, SPOTriplet> ReinforcedAction;
 
 class QL
 {
@@ -321,12 +322,14 @@ public:
       */
     QL ( ) {
         for ( int prg {-1}; prg<5; ++prg )
-            for ( int i {0}; i<5*2*3; ++i ) 
+            for ( int i {0}; i<5*2*3; ++i ) {
                 table_[i][prg] = 0.0;
-            
+            }
+
         for ( int prg {100}; prg<105; ++prg )
-            for ( int i {0}; i<5*2*3; ++i ) 
+            for ( int i {0}; i<5*2*3; ++i ) {
                 table_[i][prg] = 0.0;
+            }
 
     }
 
@@ -840,6 +843,20 @@ public:
         	}
         */
 
+        if ( triplet == prev_action ) {
+	  
+            //reinforced_action.first = prev_state;
+            if ( prev_state > 50 ) {
+                reinforced_action.first = ( prev_state-100 ) *2+1;
+            } else {
+                reinforced_action.first =prev_state*2;
+            }
+
+            reinforced_action.second = prev_action2;
+
+            ++rules[reinforced_action];
+
+        }
 
         SPOTriplet action = triplet;
         //SPOTriplet action2 = 0;
@@ -847,17 +864,28 @@ public:
 
         if ( prev_reward >  -std::numeric_limits<double>::max() ) {
 
+            isLearning = true;
+
             if ( isLearning ) {
 
+
                 /*
-                      if ( triplet == prev_action ) {
-                          reinforced_action.first = prev_state;
-                          reinforced_action.second = prev_action;
+                            if ( triplet == prev_action ) {
+                                //reinforced_action.first = prev_state;
+                 if(prev_state > 50)
+                   reinforced_action.first =( prev_state-100)*2+1;
+                 else
+                   reinforced_action.first =prev_state*2;
 
-                          ++rules[reinforced_action];
+                                reinforced_action.second = prev_action2;
 
-                      }
+                                ++rules[reinforced_action];
+
+
+                            }
                 */
+
+
                 ++frqs[prev_action2][prev_state];
 
                 /*
@@ -1110,6 +1138,21 @@ public:
         return rules.size();
     }
 
+    std::string printRules() {
+
+        std::stringstream ss;
+
+        ss << rules.size();
+
+        for ( auto& rule : rules ) {
+            ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
+        }
+
+
+        return ss.str();
+
+    }
+
 
 private:
 
@@ -1180,15 +1223,15 @@ private:
         }
     }
 
-    int N_e = 0;
+    int N_e = 150;
 
     QL ( const QL & );
     QL & operator= ( const QL & );
 
 #ifdef Q_LOOKUP_TABLE
-    double gamma = .18;
+    double gamma = .2;
 #else
-    double gamma = .18;
+    double gamma = .2;
 #endif
 
 #ifdef Q_LOOKUP_TABLE
@@ -1242,8 +1285,11 @@ private:
     double prev_image [256*256];
 #endif
 
-    ReinforcedAction reinforced_action {"unreinforced", -1};
+    //ReinforcedAction reinforced_action {"unreinforced", -1};
+    ReinforcedAction reinforced_action {-2, -2};
+    //std::map<ReinforcedAction, int> rules;
     std::map<ReinforcedAction, int> rules;
+
 };
 
 #endif

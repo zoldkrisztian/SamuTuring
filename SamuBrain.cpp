@@ -452,7 +452,10 @@ int SamuBrain::pred ( MORGAN morgan, int **reality, int * center_of_tape, int no
           prev[r][c] = /*predictions[r][c] =*/ response;
 
 	  	  
-	  
+	   qDebug() << "TM: " << samuQl[r][c].printRules().c_str();
+	   
+	   
+	   
           // aligning to psamu1 paper // if ( ( predictions[r][c] == prev[r][c] ) && ( prev[r][c] != 0 ) )
           /*
           	  if ( ( reality[r][c] == prev[r][c] ) && ( prev[r][c] != 0 ) )
