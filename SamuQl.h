@@ -1223,7 +1223,7 @@ private:
         }
     }
 
-    int N_e = 0;
+    int N_e = 15;
 
     QL ( const QL & );
     QL & operator= ( const QL & );

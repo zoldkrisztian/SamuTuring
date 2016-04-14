@@ -306,7 +306,7 @@ public:
 
   int nof {0};
 
-  long step_counter {0};
+  long step_counter {0L};
 
 #ifdef STATES_OM3
   bool states[M] = {false, false, false};
@@ -664,7 +664,9 @@ template <int M> long TuringMachine< M >::start ( void )
           // 2: ->
         }
       else
-        {
+        {	   
+	  step_counter = s; 	    
+
           // halt
           tape.clear ( nof_dirs[0], nof_dirs[2] );
           return nr_ones[1] - nr_ones[2];
