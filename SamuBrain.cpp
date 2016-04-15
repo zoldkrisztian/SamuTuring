@@ -453,6 +453,7 @@ int SamuBrain::pred ( MORGAN morgan, int **reality, int * center_of_tape, int no
 
 	  	  
 	   qDebug() << "TM: " << samuQl[r][c].printRules().c_str();
+	   qDebug() << "TM: (sort) " << samuQl[r][c].printSortedRules().c_str();
 	   
 	   
 	   

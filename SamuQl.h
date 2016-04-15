@@ -57,6 +57,7 @@
 #include <limits>
 #include <fstream>
 #include <cstring>
+#include <algorithm>
 
 #include "orchmach1.hpp"
 
@@ -844,7 +845,7 @@ public:
         */
 
         if ( triplet == prev_action ) {
-	  
+
             //reinforced_action.first = prev_state;
             if ( prev_state > 50 ) {
                 reinforced_action.first = ( prev_state-100 ) *2+1;
@@ -1153,6 +1154,34 @@ public:
 
     }
 
+    std::string printSortedRules() {
+
+
+        std::vector<std::pair<std::pair<int, int>, int>> tmp;
+
+        for ( auto& rule : rules ) {
+            std::pair<std::pair<int, int>, int> p {{rule.first.first, rule.first.second}, rule.second};
+            tmp.push_back ( p );
+        }
+
+        std::sort (
+            std::begin ( tmp ), std::end ( tmp ),
+        [=] ( auto&& t1, auto&&t2 ) {
+            return t1.second > t2.second;
+        }
+        );
+
+        std::stringstream ss;
+
+        ss << tmp.size();
+
+        for ( auto& rule : tmp ) {
+            ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
+        }
+        return ss.str();
+
+    }
+
 
 private:
 
@@ -1223,7 +1252,7 @@ private:
         }
     }
 
-    int N_e = 15;
+    int N_e = 25;
 
     QL ( const QL & );
     QL & operator= ( const QL & );
@@ -1270,8 +1299,8 @@ private:
     double min_reward {-3.1};
     */
 
-    double max_reward {1.00};
-    double min_reward {-100.00};
+    double max_reward {100.00};
+    double min_reward {-10.00};
 
 #ifdef PLACE_VALUE
     double prev_image [10*3];
