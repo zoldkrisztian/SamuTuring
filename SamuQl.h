@@ -1156,7 +1156,6 @@ public:
 
     std::string printSortedRules() {
 
-
         std::vector<std::pair<std::pair<int, int>, int>> tmp;
 
         for ( auto& rule : rules ) {
@@ -1176,8 +1175,10 @@ public:
         ss << tmp.size();
 
         for ( auto& rule : tmp ) {
-            ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
-        }
+            //ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
+ss << ", " <<rule.first.first <<", "  << rule.first.second;
+	  
+	}
         return ss.str();
 
     }
@@ -1252,7 +1253,7 @@ private:
         }
     }
 
-    int N_e = 25;
+    int N_e = 125;
 
     QL ( const QL & );
     QL & operator= ( const QL & );
