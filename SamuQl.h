@@ -1253,7 +1253,7 @@ private:
         }
     }
 
-    int N_e = 100;
+    int N_e = 91;
 
     QL ( const QL & );
     QL & operator= ( const QL & );
@@ -1301,7 +1301,7 @@ private:
     */
 
     double max_reward {10.00};
-    double min_reward {-100.00};
+    double min_reward {-1000.00};
 
 #ifdef PLACE_VALUE
     double prev_image [10*3];
