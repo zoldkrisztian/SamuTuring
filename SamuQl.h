@@ -1300,8 +1300,8 @@ private:
     double min_reward {-3.1};
     */
 
-    double max_reward {10.00};
-    double min_reward {-1000.00};
+    double max_reward {1.00};
+    double min_reward {-100000.00};
 
 #ifdef PLACE_VALUE
     double prev_image [10*3];
