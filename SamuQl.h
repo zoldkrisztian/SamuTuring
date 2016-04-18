@@ -1253,7 +1253,7 @@ private:
         }
     }
 
-    int N_e = 10;
+    int N_e = 3;
 
     QL ( const QL & );
     QL & operator= ( const QL & );
