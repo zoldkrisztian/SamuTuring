@@ -348,8 +348,15 @@ public:
 
     }
 
+    bool rnd() {
+
+        int r = uniform ( zgen );
+
+        return r == 1;
+    }
+
     double f ( double u, int n ) {
-        if ( n < N_e ) {
+        if ( n < N_e || rnd() ) {
             return max_reward;
         } else {
             return u;
@@ -1176,9 +1183,9 @@ public:
 
         for ( auto& rule : tmp ) {
             //ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
-ss << ", " <<rule.first.first <<", "  << rule.first.second;
-	  
-	}
+            ss << ", " <<rule.first.first <<", "  << rule.first.second;
+
+        }
         return ss.str();
 
     }
@@ -1225,10 +1232,10 @@ private:
     TripletNode *tree;
     int depth {0};
 
-    /*
+
     std::random_device zinit;
     std::default_random_engine zgen {zinit() };
-    */
+    std::uniform_int_distribution<int> uniform {1, 100};
 
     void debug_tree ( TripletNode * node, std::ostream & os ) {
         if ( node != nullptr ) {
