@@ -904,7 +904,8 @@ public:
             }
 
             action2 = argmax_ap_f ( prg );
-            action = exec ( action2, center_of_tape, noc );
+            if(action2 != -1)                    
+                action = exec ( action2, center_of_tape, noc );
 
         }
 
@@ -1300,8 +1301,8 @@ private:
     double min_reward {-3.1};
     */
 
-    double max_reward { 1000000.00};
-    double min_reward {-1.00};
+    double max_reward { 0.00};
+    double min_reward {-10000.00};
 
 #ifdef PLACE_VALUE
     double prev_image [10*3];
