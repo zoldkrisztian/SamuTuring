@@ -904,8 +904,9 @@ public:
             }
 
             action2 = argmax_ap_f ( prg );
-            if(action2 != -1)                    
+            if ( action2 != -1 ) {
                 action = exec ( action2, center_of_tape, noc );
+            }
 
         }
 
@@ -935,7 +936,7 @@ public:
 #endif
     double alpha ( int n ) {
 
-        return 1.0/ ( ( ( double ) n ) + 100.0 );
+        return ( ( double ) n ) / ( ( ( double ) n ) + 100.0 );
 
     }
 
@@ -1155,6 +1156,117 @@ public:
 
     }
 
+    std::string multTos ( std::map<int, std::vector<int>> &machines ) {
+        std::stringstream ss;
+        int m = 1;
+        for ( auto& mm : machines ) {
+            m *= mm.second.size();
+            ss << "*" << mm.second.size();
+
+        }
+        ss << "=" << m;
+
+        return ss.str();
+    }
+
+    
+    int frek(int from, int to)
+    {
+        for ( auto& rule : rules ) {
+            if(rule.first.first == from && rule.first.second == to) 
+	      return rule.second;
+        }
+        
+        return 0;
+      
+    }
+    
+    std::string printMachines() {
+
+        std::stringstream ss;
+
+        std::map<int, std::vector<int>> machines;
+        std::map<int, int> maxs;
+
+        for ( auto& rule : rules ) {
+            if ( rule.second > 10*N_e && rule.first.first >= 0 ) {
+                machines[rule.first.first].push_back ( rule.first.second );
+		if(rule.second > maxs[rule.first.first])
+		  maxs[rule.first.first] = rule.second;
+            }
+        }
+
+        ss << multTos ( machines );
+        for ( auto& mm : machines ) {
+            int max = (3*maxs[mm.first])/4;
+
+	    ss << "[" << max << "]";
+	    
+            mm.second.erase(std::remove_if (
+                mm.second.begin(), mm.second.end(),
+            [=] ( int & n ) {
+                return frek(mm.first, n) < max;
+            } ), mm.second.end() );
+	    	    
+        }
+        ss << multTos ( machines );
+
+        std::vector<std::vector<std::pair<int, int>>> oldtms;
+        std::vector<std::vector<std::pair<int, int>>> newtms;
+
+        for ( auto& m : machines ) {
+
+            newtms.clear();
+
+            if ( oldtms.size() > 0 )
+                for ( auto& mm : oldtms ) {
+
+                    for ( auto& tos : m.second ) {
+
+                        std::vector<std::pair<int, int>> mmm = mm;
+                        std::pair<int, int> p = std::make_pair ( m.first, tos );
+                        mmm.push_back ( p );
+                        newtms.push_back ( mmm );
+
+
+                    }
+
+                }
+            else {
+
+                for ( auto& tos : m.second ) {
+
+                    std::vector<std::pair<int, int>> mm;
+                    std::pair<int, int> p = std::make_pair ( m.first, tos );
+                    mm.push_back ( p );
+                    newtms.push_back ( mm );
+
+                }
+
+            }
+
+            oldtms = newtms;
+
+        }
+
+        ss << "Possible TMs:" << oldtms.size() << std::endl;
+
+        for ( auto& mm : oldtms ) {
+
+            ss << "***TM: " << mm.size();
+            for ( auto& mmm : mm ) {
+
+                ss << ", " << mmm.first << ", " << mmm.second;
+
+            }
+            ss << std::endl;
+
+        }
+
+        return ss.str();
+
+    }
+
     std::string printSortedRules() {
 
         std::vector<std::pair<std::pair<int, int>, int>> tmp;
@@ -1177,9 +1289,9 @@ public:
 
         for ( auto& rule : tmp ) {
             //ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
-ss << ", " <<rule.first.first <<", "  << rule.first.second;
-	  
-	}
+            ss << ", " <<rule.first.first <<", "  << rule.first.second;
+
+        }
         return ss.str();
 
     }
