@@ -454,8 +454,17 @@ int SamuBrain::pred ( MORGAN morgan, int **reality, int * center_of_tape, int no
 	  	  
 	   qDebug() << "*TM: " << samuQl[r][c].printRules().c_str();
 	   qDebug() << "*TM: (sort) " << samuQl[r][c].printSortedRules().c_str();
-	   	   qDebug() << "**TM: " << samuQl[r][c].printMachines().c_str();
+	   qDebug() << "**TM: " << samuQl[r][c].printMachines().c_str();
 	   
+	   std::string tm314 ("9, 0, 9, 1, 11, 2, 5, 3, 20, 4, 17, 5, 24, 7, 29, 8, 15, 9, 1");
+std::size_t found = samuQl[r][c].printMachines().find(tm314);
+  if (found!=std::string::npos)
+  {
+    	   qDebug() << " +++++++++++ VAN ++++++++++++++++++++++++++++++++++++++++++";
+  } else
+   {
+    	   qDebug() << " ----------- NINCS +++++++++++++++++++++++++++++++++++++";
+  } 
 	   
 	   
           // aligning to psamu1 paper // if ( ( predictions[r][c] == prev[r][c] ) && ( prev[r][c] != 0 ) )

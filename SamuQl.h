@@ -327,7 +327,7 @@ public:
                 table_[i][prg] = 0.0;
             }
 
-        for ( int prg {100}; prg<105; ++prg )
+        for ( int prg {99}; prg<105; ++prg )
             for ( int i {0}; i<5*2*3; ++i ) {
                 table_[i][prg] = 0.0;
             }
@@ -904,7 +904,7 @@ public:
             }
 
             action2 = argmax_ap_f ( prg );
-            if ( action2 != -1 ) {
+            if ( action2 != -1 && action2 != 99) {
                 action = exec ( action2, center_of_tape, noc );
             }
 
@@ -1168,7 +1168,6 @@ public:
 
         return ss.str();
     }
-
     
     int frek(int from, int to)
     {
@@ -1198,8 +1197,9 @@ public:
 
         ss << multTos ( machines );
         for ( auto& mm : machines ) {
-            int max = (3*maxs[mm.first])/4;
-
+            //int max = (4*maxs[mm.first])/5;
+            int max = maxs[mm.first]/10;
+	    
 	    ss << "[" << max << "]";
 	    
             mm.second.erase(std::remove_if (
@@ -1366,15 +1366,15 @@ private:
         }
     }
 
-    int N_e = 3;
+    int N_e = 0;
 
     QL ( const QL & );
     QL & operator= ( const QL & );
 
 #ifdef Q_LOOKUP_TABLE
-    double gamma = .2;
+    double gamma = .5;
 #else
-    double gamma = .2;
+    double gamma = .5;
 #endif
 
 #ifdef Q_LOOKUP_TABLE
@@ -1413,8 +1413,8 @@ private:
     double min_reward {-3.1};
     */
 
-    double max_reward { 0.00};
-    double min_reward {-10000.00};
+    double max_reward {0.0};
+    double min_reward {-1000000000.00};
 
 #ifdef PLACE_VALUE
     double prev_image [10*3];

@@ -224,6 +224,14 @@ public:
 
   }
 
+  void rndclear ( long from, long to )
+  {
+
+    srandom(1);
+    memset ( ( void * ) ( tape+M/2-from/8-4 ), random(), from/8+to/8+8 );
+
+  }  
+  
   int
   get_tape ( long tapei )
   {
@@ -723,7 +731,8 @@ template <int M> int TuringMachine< M >::step_by_step ( int *center_of_tape , in
     {
 
       // halt
-      tape.clear ( nof_dirs[0], nof_dirs[2] );
+      //tape.clear ( nof_dirs[0], nof_dirs[2] );
+      tape.rndclear ( nof_dirs[0], nof_dirs[2] );
       ret = -1; //nr_ones[1] - nr_ones[2];
     }
   //  }
