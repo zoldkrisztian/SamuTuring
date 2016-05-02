@@ -4,6 +4,8 @@
 Orchestrated machines (OrchMach1)
 The research is presented in an already submitted paper entitled
 "Are there intelligent Turing machines?"
+http://arxiv.org/abs/1503.03787
+https://github.com/nbatfai/orchmach
 ---------------------------------
 This is the most precise description of the orchestrated machine
 algorithm because it is implemented in a concrete programming
