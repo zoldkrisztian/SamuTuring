@@ -454,10 +454,11 @@ int SamuBrain::pred ( MORGAN morgan, int **reality, int * center_of_tape, int no
 	  	  
 	   qDebug() << "*TM: " << samuQl[r][c].printRules().c_str();
 	   qDebug() << "*TM: (sort) " << samuQl[r][c].printSortedRules().c_str();
-	   qDebug() << "**TM: " << samuQl[r][c].printMachines().c_str();
+	   std::string pm = samuQl[r][c].printMachines();
+	   qDebug() << "**TM: " << pm.c_str();
 	   
-	   std::string tm314 ("9, 0, 9, 1, 11, 2, 5, 3, 20, 4, 17, 5, 24, 7, 29, 8, 15, 9, 1");
-std::size_t found = samuQl[r][c].printMachines().find(tm314);
+	   std::string tm314 ("9, 0, 11, 1, 15, 2, 17, 3, 11, 4, 23, 5, 24, 6, 3, 7, 21, 9, 0");
+std::size_t found = pm.find(tm314);
   if (found!=std::string::npos)
   {
     	   qDebug() << " +++++++++++ VAN ++++++++++++++++++++++++++++++++++++++++++";

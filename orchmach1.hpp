@@ -691,6 +691,8 @@ template <int M> long TuringMachine< M >::start ( void )
 template <int M> void TuringMachine< M >::restart_step_by_step ()
 {
   step_counter = 0;
+  tape.rndclear ( nof_dirs[0], nof_dirs[2] );
+  
 }
 
 template <int M> int TuringMachine< M >::step_by_step ( int *center_of_tape , int noc )
