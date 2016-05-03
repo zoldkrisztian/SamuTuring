@@ -210,7 +210,7 @@ public:
 
     tape = new char[M];
     clear();
-
+    srandom(1);
   }
 
   void clear ( void )
@@ -228,8 +228,7 @@ public:
 
   void rndclear ( long from, long to )
   {
-
-    srandom(1);
+    
     memset ( ( void * ) ( tape+M/2-from/8-4 ), random(), from/8+to/8+8 );
 
   }  
