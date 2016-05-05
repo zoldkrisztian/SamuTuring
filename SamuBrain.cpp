@@ -445,6 +445,7 @@ int SamuBrain::pred ( MORGAN morgan, int **reality, int * center_of_tape, int no
           //prev[r][c] = reality[r][c];
  
  
+	   qDebug() << "RESP QQQQQQQQQQQQQ " << response;
  
  
  

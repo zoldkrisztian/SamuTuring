@@ -73,7 +73,7 @@ class GameOfLife : public QThread
     SamuBrain* samuBrain;
 
     long m_time {0};
-    int m_delay {50};//{1};//{100};//{15};
+    int m_delay {1};//{50};//{1};//{100};//{15};
     long age {0};
 
     bool paused {false};
@@ -104,6 +104,8 @@ class GameOfLife : public QThread
     
     TuringMachine<5> *tm;
     int center_of_tape[2*10+1];
+    
+    int halting{0};
     
 public:
     GameOfLife ( int w = 30, int h = 20 );

@@ -92,11 +92,11 @@ GameOfLife::GameOfLife ( int w, int h ) : m_w ( w ), m_h ( h )
   manx = m_w/2;
   housex = 2*m_w/5;
 
-  
+
 //  tm = new TuringMachine<5> ( 9, 0, 9, 1, 11, 2, 17, 3, 21, 4, 19, 5, 29, 6, 5, 7, 6, 8, 8 );
 //  tm = new TuringMachine<5> ( 9, 0, 16, 1, 14, 2, 18, 3, 11, 4, 27, 5, 29, 7, 27, 8, 21, 9, 12); //9, 0, 9, 1, 11, 2, 5, 3, 20, 4, 17, 5, 24, 7, 29, 8, 15, 9, 1 );//9, 0, 9, 1, 11, 2, 5, 3, 20, 4, 17, 5, 24, 7, 29, 8, 15, 9, 1 );
   tm = new TuringMachine<5> ( 9, 0, 9, 1, 11, 2, 5, 3, 20, 4, 17, 5, 24, 7, 29, 8, 15, 9, 1 );//9, 0, 9, 1, 11, 2, 5, 3, 20, 4, 17, 5, 24, 7, 29, 8, 15, 9, 1 );
-  
+
 }
 
 GameOfLife::~GameOfLife()
@@ -148,7 +148,7 @@ void GameOfLife::run()
                        << "   #MPUs:" << samuBrain->nofMPUs()
                        << "Observation (MPU):" << samuBrain->get_foobar().c_str();
             }
-            
+
           //latticeIndex = ( latticeIndex+1 ) %2;
           emit cellsChanged ( lattices[latticeIndex], predictions, fp, fr );
 
@@ -365,19 +365,45 @@ void GameOfLife::development()
 
 
   int res = tm->step_by_step ( center_of_tape, 10 );
-  
-  
+
+
   for ( int i {0}; i<2*10+1; ++i )
     {
-        nextLattice[0][i] = 100*center_of_tape[i]+res;
-	
-	if(i != 10)
-	  predictions[0][i] = nextLattice[0][i];
+
+      if ( center_of_tape[i] > 1 )
+        {
+          qDebug() << " TAPE>1 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ" << center_of_tape[i];
+
+        }
+
+
+      nextLattice[0][i] = 100*center_of_tape[i]+res;
+
+      if ( i != 10 )
+        predictions[0][i] = nextLattice[0][i];
+
+
+      if ( predictions[0][i] >= 200 )
+        {
+          qDebug() << " 200 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ" << predictions[0][i] << center_of_tape[i] << res << i;
+
+        }
 
     }
-    
-    if(res == -1)
-      tm->restart_step_by_step();
+
+  if ( res == -1 )
+    {
+      qDebug() << "HALTING TAPE>1 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ" << halting;
+
+      //if ( halting++ > 10 )
+        tm->restart_step_by_step();
+
+    }
+  else
+    {
+      //halting = 0;
+    }
+
 
   /*
     if ( m_time < 3000 )

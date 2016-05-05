@@ -161,7 +161,13 @@ void SamuLife::paintEvent ( QPaintEvent* )
 
                 }
 
-
+                
+                if(state > 10)
+		{
+		  qDebug() << "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ" << state;
+		  
+		}
+		  
               if ( j==10 )
                 {
 

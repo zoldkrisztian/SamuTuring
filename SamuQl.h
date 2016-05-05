@@ -324,12 +324,12 @@ public:
     QL ( ) {
         for ( int prg {-1}; prg<5; ++prg )
             for ( int i {0}; i<5*2*3; ++i ) {
-                table_[i][prg] = 0.0;
+                table_[i][prg] = 1.0;
             }
 
         for ( int prg {100}; prg<105; ++prg )
             for ( int i {0}; i<5*2*3; ++i ) {
-                table_[i][prg] = 0.0;
+                table_[i][prg] = 1.0;
             }
 
     }
@@ -356,7 +356,7 @@ public:
     }
 
     double f ( double u, int n ) {
-        if ( n < N_e || rnd() ) {
+        if ( n < N_e /*|| rnd()*/ ) {
             return max_reward;
         } else {
             return u;
@@ -818,12 +818,22 @@ public:
         b[1] = center_of_tape[noc];
         b[2] = center_of_tape[noc+1];
 
+	   qDebug() << "-- EXEC B QQQQQQQQQQQQQ " <<  b[0]<<  b[1]<<  b[2] <<tr.to[toi][1] <<toi << "QQQ";
+	
+	   if(tr.to[toi][1] == 4)
+	   qDebug() << "-- EXEC B AAAAAAAAAAAAAAAAAAAAAA QQQQQQQQQQQQQ " <<  b[0]<<  b[1]<<  b[2] <<tr.to[toi][1] <<toi;
+	
         //state = rules.to[toi][0];
         //tape.set_tape ( tape.tapei, rules.to[toi][1] );
         int tapei =  1;
         b[tapei] = tr.to[toi][1];
         tapei += ( tr.to[toi][2] - 1 );
 
+	
+	   qDebug() << "-- EXEC QQQQQQQQQQQQQ " <<  b[tapei];
+	
+	
+	
         return tr.to[toi][0] + 100 * b[tapei];
 
     }
@@ -911,6 +921,8 @@ public:
             }
 
             action2 = argmax_ap_f ( prg );
+	    
+	    if(action2 != -1)
             action = exec ( action2, center_of_tape, noc );
 
         }
@@ -941,8 +953,13 @@ public:
 #endif
     double alpha ( int n ) {
 
-        return 1.0/ ( ( ( double ) n ) + 100.0 );
-
+      
+        //return 1.0/ ( ( ( double ) n ) + 100.0 );
+      //return 1.0/ ( 1.0 + ( ( double ) n )  );
+//return 0.1/ (  ( ( double ) n ) * ( ( double ) n ) );
+      
+      return  std::tanh(((double)n) / 3000000.0);
+      
     }
 
     void clearn ( void ) {
@@ -1235,7 +1252,7 @@ private:
 
     std::random_device zinit;
     std::default_random_engine zgen {zinit() };
-    std::uniform_int_distribution<int> uniform {1, 100};
+    std::uniform_int_distribution<int> uniform {1,55};
 
     void debug_tree ( TripletNode * node, std::ostream & os ) {
         if ( node != nullptr ) {
@@ -1260,7 +1277,7 @@ private:
         }
     }
 
-    int N_e = 3;
+    int N_e = 0;//10;
 
     QL ( const QL & );
     QL & operator= ( const QL & );
@@ -1307,8 +1324,8 @@ private:
     double min_reward {-3.1};
     */
 
-    double max_reward { 1000000.00};
-    double min_reward {-1.00};
+    double max_reward { 0.00};
+    double min_reward {-100000.00};
 
 #ifdef PLACE_VALUE
     double prev_image [10*3];
