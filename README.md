@@ -3,7 +3,7 @@
 This is a simplified version of the project [SamuKnows](https://github.com/nbatfai/SamuKnows).
 In this experiment Samu learns the transition rules of a Turing machine. The experiments use the Turing machine implementation of the project [orchmach](https://github.com/nbatfai/orchmach).
 
-## SamuKnows, exp. 11, cognitive mental organs: MPU (Mental Processing Unit), acquiring higher-order knowledge
+## SamuKnows, exp. 11, cognitive mental organs: MPU (Mental Processing Unit)
 This experiment is an example of the paper entitled "Samu Has Learned Turing Machines".
 
 
