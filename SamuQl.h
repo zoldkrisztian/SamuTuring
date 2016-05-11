@@ -290,7 +290,7 @@ typedef std::string Feeling;
 typedef int SPOTriplet;
 //typedef std::pair<std::string, SPOTriplet> ReinforcedAction;
 typedef std::pair<int, SPOTriplet> ReinforcedAction;
-
+using myPair=std::pair<int, int>; 
 class QL
 {
 public:
@@ -1266,10 +1266,20 @@ public:
         return ss.str();
 
     }
-
+//vedes
     std::string printSortedRules() {
+//----------
+/*std::vector<std::tuple<int,int,int>> tmp;
 
-        std::vector<std::pair<std::pair<int, int>, int>> tmp;
+        for ( auto& rule : rules ) {
+            auto p = std::make_tuple(rule.first.first, rule.first.second, rule.second);
+            //std::tuple<int,int,int> p {rule.first.first, rule.first.second, rule.second};
+            tmp.push_back ( p );
+        }
+*/
+//----------
+/*
+        std::vector<std::pair<std::pair<int, int>, int>> tmp;				//gyári
 
         for ( auto& rule : rules ) {
             std::pair<std::pair<int, int>, int> p {{rule.first.first, rule.first.second}, rule.second};
@@ -1283,14 +1293,68 @@ public:
         }
         );
 
+*/
+//-----------
+std::vector<std::tuple<int, int, int> > tmp;	//tuple megvalósítás
+
+        for ( auto& rule : rules ) {
+            std::tuple<int, int, int> p;
+	    std::get<0>(p)=rule.first.first;
+	    std::get<1>(p)=rule.first.second;
+	    std::get<2>(p)=rule.second;
+            tmp.push_back ( p );
+        }
+
+for(std::vector<std::tuple<int,int,int>>::iterator it = tmp.begin(); it!=tmp.end() ; it++)
+        {
+
+            if(std::get<2>(*it) < 100)
+            {
+                it = tmp.erase(it);
+                it--;
+            }
+
+        }
+
+/*tmp.erase(std::remove_if(tmp.begin(), tmp.end(), [&](std::tuple<int,int,int>& p)
+ { 
+	if (std::get<2>(p) < 100)
+	{ 
+		return true;
+	} 
+	else
+ 	{ 
+		return false;
+ 	}
+ }),tmp.end());
+*/
+/*
+        std::sort (
+            std::begin ( tmp ), std::end ( tmp ),
+        [=] ( auto&& t1, auto&& t2 ) {
+            return std::get<2>(t1) > std::get<2>(t2);
+        }
+        );
+*/
+//----------
+   struct Greater		//functoros rendezés
+        {
+            bool operator()( const std::tuple<int,int,int>& lx,
+                             const std::tuple<int,int,int>& rx )
+                    const { return std::get<2>(lx) > std::get<2>(rx); }
+        };
+
+        std::sort( tmp.begin(), tmp.end(), Greater() );
+//----------
         std::stringstream ss;
 
         ss << tmp.size();
 
         for ( auto& rule : tmp ) {
             //ss << ", " <<rule.first.first <<","  << rule.first.second << "(" << rule.second<< ") ";
-            ss << ", " <<rule.first.first <<", "  << rule.first.second;
-
+          //ss << ", " <<rule.first.first <<", "  << rule.first.second;					//gyári
+	//ss << ", " <<std::get<0>(rule) <<", " << std::get<1>(rule);					//tuple
+ 	ss << ", " << std::get<0>(rule) <<"," << std::get<1>(rule) << "(" << std::get<2>(rule) << ") "; //tuple functor
         }
         return ss.str();
 
